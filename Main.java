@@ -10,10 +10,10 @@ public class Main {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
         System.out.println("Hello and welcome to Civil War!");
-        System.out.print("There are 2 paths currently, which one would you like to choose: ");
+        System.out.print("There are 2 paths currently, which one would you like to choose: (1 / 2) ");
 
-        Scanner myObj = new Scanner(System.in);
-        String path = myObj.nextLine();
+        String path = new Scanner(System.in)
+                .nextLine();
 
         System.out.println("Congrats! You chose path " + path);
 
@@ -22,28 +22,14 @@ public class Main {
                 System.out.println("Path 1:");
                 EarthtoMoon.main();
                 MoontoMars.main();
-                // Political Divide // Vote // Supreme Lead // Destroy
-                System.out.println("We've come this far.. should we go to Europa? (y / n) ");
-                Scanner whatHappensNow = new Scanner(System.in);
-                String doWeGoToEuropa = whatHappensNow.nextLine();
-                if(doWeGoToEuropa.equals("y")) {
+                // Political Divide // Vote // Supreme Lead // Destroy // Veto-Tree
+                System.out.println("Explorer's Dilemma - Should we go further on to Europa? (y / n / z) ");
+                String doWeGoToEuropa = new Scanner(System.in).nextLine();
+                if (doWeGoToEuropa.equals("y")) {
                     MarstoEuropa.main();
-                } else if(doWeGoToEuropa.equals("n")) {
-                    System.out.println("The group did not choose to go to Europa..");
-                    System.out.println("We're not here to stay.."); // Pre-decided
+                } else if (doWeGoToEuropa.equals("n")) {
                     MarstoEarth.main();
-                    System.out.println("Comms Collected: 1 Will He Dare 2 He Did It");
-                    System.out.println("q. Who are these people? (K)");
-                    System.out.println("""
-                            We already know what's gonn(woah)a happen Hrishi
-                            '(ins)0' you wanna play
-                            '(ins)1'>like real[exxa--]ly(' we know) this is crazy (4R) good
-                            '(ins)2' it's crazy \\/\\/ [can you really, yes! slight(!) affirmation 'woah bro' 'fuck']""");
-                    // insert garbage collector lol
-                } else if(doWeGoToEuropa.equals("z")) {
-                    System.out.println("An undertone overtone of zombus zombie arises.. Ouuu:TW");
-                    System.out.println("We're not here to stay!"); // Presidency Campaign
-                    System.out.println("Benedict Cumberbatch is saying very good (Hahahaha what..? (K))");
+                } else if (doWeGoToEuropa.equals("z")) {
                     MarstoEarth.main();
                 } else {
                     System.out.println("An answer to that selection choice does not exist at the moment.");
@@ -52,106 +38,37 @@ public class Main {
 
             case "2":
                 System.out.println("Path 2:");
-                File toRead;
-                Scanner reader;
+                // A series of concatenated events break out on Earth
+                CivilWar.main();
+                break;
 
-                ArrayList<String> allText = new ArrayList<String>();
-
-                System.out.println(allText);
-
-                try {
-                    toRead = new File("src/text.txt");
-                    System.out.println("File created.");
-                    reader = new Scanner(toRead);
-                    System.out.println("Reader created.");
-                    while (reader.hasNextLine()) {
-                        String data = reader.nextLine();
-                        allText.add(data);
-                        System.out.println("Extracted text.");
-                    }
-                    reader.close();
-                } catch (FileNotFoundException e) {
-                    System.out.println("The file was not found.");
-                    e.printStackTrace();
-                }
-
-                for (String text : allText) {
-                    System.out.print(text);
-                }
-
-                ArrayList<String> allWords = new ArrayList<String>();
-
-                System.out.println();
-                System.out.println(allWords);
-
-                // O(n^2)
-                for (String text : allText) {
-                    List<String> words = Arrays.asList(text.split(" "));
-
-                    for (String word : words) {
-                        allWords.add(word);
-                    }
-                }
-
-                System.out.println(allWords);
-
-                // Put in distinct HashMap
-                HashMap<String, Integer> distinct = new HashMap<String, Integer>();
-
-                System.out.println(distinct);
-
-                for (String word : allWords) {
-                    System.out.println(distinct.containsKey(word));
-                    if (distinct.containsKey(word)) {
-                        int val = distinct.get(word);
-                        val++;
-                        distinct.put(word, val);
-                    } else {
-                        distinct.put(word, 0);
-                    }
-                }
-
-                //System.out.println(distinct);
-
-                for (Map.Entry<String, Integer> entry : distinct.entrySet()) {
-                    String word = entry.getKey();
-                    Integer count = entry.getValue();
-
-                    System.out.println(word + " : " + count);
-                }
-
-                HashMap<String, HashMap<String, Integer>> cataloguedIndex =
-                        new HashMap<>();
-
-                for (Map.Entry<String, Integer> entry : distinct.entrySet()) {
-                    String word = entry.getKey();
-                    if (word.length() != 0) {
-                        String firstLetter = Character.toString(word.charAt(0));
-
-                        if (!cataloguedIndex.containsKey(firstLetter)) {
-                            cataloguedIndex.put(firstLetter, new HashMap<String, Integer>());
-                        }
-
-                        HashMap<String, Integer> wordCount = cataloguedIndex.get(firstLetter);
-                        Integer count = entry.getValue();
-
-                        if (!wordCount.containsKey(word)) {
-                            wordCount.put(word, count);
-                        }
-                    }
-                }
-
-                for (Map.Entry<String, HashMap<String, Integer>> entry : cataloguedIndex.entrySet()) {
-                    System.out.println();
-                    System.out.println(entry.getKey() + ": ");
-
-                    for (Map.Entry<String, Integer> entryInner : entry.getValue().entrySet()) {
-                        System.out.println(entryInner.getKey() + " " + entryInner.getValue());
-                    }
-                }
-
-                System.out.println("Fin.");
+            case "supreme":
+                // the best option, strong interplanetary transport network
+                travelToMarsAndBack();
                 break;
         }
+    }
+
+    public static void travelToMarsAndBack() {
+        // Do we want to travel again? Solidifying the triangulate network.
+        System.out.println("Would you like to travel to Mars passing by the Moon then return back to Earth?");
+        Scanner obj = new Scanner(System.in);
+        String answer = null;
+
+        do {
+            System.out.println("(y / n)");
+            answer = obj.nextLine();
+
+            if (answer.equals("y")) {
+                System.out.println("Executing Earth Moon Mars Triangulate Sequence!");
+                System.out.println("Safe Travels!");
+
+                EarthtoMarsTriangulate.main();
+
+                System.out.println("\nYou have completed the Earth Moon Mars Triangulate Sequence.");
+            } else {
+                System.out.println("You have chosen to stay on Earth.");
+            }
+        } while(answer.equals("y"));
     }
 }
